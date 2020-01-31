@@ -1,0 +1,543 @@
+// ================================================================================================
+// 	File Name: app.scss
+// 	Description: Mail application scss file.
+// 	----------------------------------------------------------------------------------------------
+// 	Item Name: Modern Admin - Clean Bootstrap 4 Dashboard HTML Template
+// 	Version: 1.0
+// 	Author: PIXINVENT
+// 	Author URL: http://www.themeforest.net/user/pixinvent
+// ================================================================================================
+
+
+$primary: #B2A388;
+$secondary: #F4F1ED;
+
+html,
+body {
+    line-height: 1.5;
+    overflow-x: hidden;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 15px;
+}
+
+html.mobile-active {
+    overflow-y: hidden;
+
+    body {
+        overflow: hidden;
+    }
+}
+
+a {
+    color: #b2a388;
+    transition: all .2s linear;
+    -webkit-transition: all .2s linear;
+    -moz-transition: all .2s linear;
+
+    &:hover {
+        color: darken(#b2a388, 10);
+    }
+}
+
+.container {
+    width: 90%;
+}
+
+h1,h2,h3,h4,h5,h6 {
+    line-height: 1.2;
+    font-family: 'Open Sans', sans-serif;
+}
+
+h1 {
+    font-size: 32px;
+}
+
+h2 {
+    font-size: 30px;
+}
+h3 {
+    font-size: 26px;
+}
+h4 {
+    font-size: 20px;
+}
+h5 {
+    font-size: 16px;
+}
+h6 {
+    font-size: 13px;
+}
+
+
+p {
+    margin-bottom: 1em;
+}
+
+img {
+    display: inline-block;
+}
+
+.text {
+    &-primary {
+        color: $primary;
+    }
+
+    &-secondary {
+        color: $secondary;
+    }
+}
+
+.bg {
+    &-primary {
+        background: $primary;
+    }
+
+    &-secondary {
+        background: $secondary;
+    }
+}
+
+.border {
+    &-primary {
+        border-color: $primary;
+    }
+
+    &-secondary {
+        border-color: $secondary;
+    }
+}
+
+#bg-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+.btn {
+    background-color: $primary;
+    padding: 0.6rem 1rem;
+    color: #fff;
+    text-transform: uppercase;
+
+    i {
+        margin-right: 3px;
+    }
+
+    &:hover {
+        background-color: darken($primary, 5);
+        color: #fff;
+    }
+}
+
+.btn-arrow {
+    span {
+        display: inline-block;
+        margin-right: 1rem;
+        position: relative;
+        top: -2px;
+
+        img {
+            display: inline-block;
+        }
+    }
+}
+
+.widget-container {
+    .widget-title {
+        background: $primary;
+        text-transform: uppercase;
+        color: #fff;
+        padding: 0.5em 2em;
+        font-size: 0.866em;
+        font-weight: 600;
+    }
+}
+
+.widget_recent_entries {
+    ul {
+        padding: 0.5em 2em;
+        background: #f7f7f7;
+
+        li {
+            margin: 0.5em 0;
+
+            a {
+                font-weight: 600;
+                display: block;
+                font-size: 0.933em;
+                color: #111;
+                    
+                &:hover {
+                    color: $primary;
+                }
+            }
+
+            span {
+                display: block;
+                color: lighten($primary, 15);
+                font-size: 0.866em;
+            }
+        }
+    }
+}
+
+nav {
+    &.main {
+        position: relative;
+        z-index: 109;
+
+        li {
+            position: relative;
+
+            a {
+                color: #111;
+            }
+
+            .submenu {
+                display: none;
+                position: absolute;
+                left: 0;
+                padding-top: 2px;
+                width: 300px;
+                background: transparent;
+
+                li {
+                    a {
+                        background: $primary;
+                        color: #222;
+                        font-size: 0.86667rem;
+                        display: block;
+                        border-bottom: 1px solid darken($primary, 8);
+
+                        &:hover {
+                            background: lighten($primary, 3);
+                        }
+                    }
+                
+                    &:hover {
+                        > .submenu {
+                            display: block;
+                            left: 300px;
+                            top: 10px;
+
+                            a {
+                                background: darken($primary, 5);
+                                border-bottom: 1px solid darken($primary, 10);
+                            }
+                        }
+                    }
+                }
+            }
+
+            &:hover {
+                a {
+                    color: $primary;
+                }
+                
+                > .submenu {
+                    display: block;
+
+                    a {
+                        color: #222;
+                    }
+                }
+            }
+        }
+    }
+}
+
+#trigger-mobile {
+    width: 50px;
+    margin-top: 5px;
+    vertical-align: middle;
+    cursor: pointer;
+
+    span {
+        transition: all 0.3s ease-in-out;
+        background-color: $primary;
+        height: 3px;
+        display: block;
+        margin-bottom: 5px;
+        cursor: pointer;
+    }
+
+    
+    &.mobile-active {
+        z-index: 110;
+        position: relative;
+        top: -20px;
+
+        span {
+            background-color: #fff;
+            -webkit-transform: translateY(7px) rotate(45deg);
+            transform: translateY(7px) rotate(45deg)  ;
+            
+            &:nth-child(2) {
+                -webkit-transform: translateX(200px);
+                transform: translateX(200px);
+            }
+
+            &:nth-child(3) {
+                -webkit-transform: translateY(-7px) rotate(-45deg);
+                transform: translateY(-7px) rotate(-45deg);        
+            }
+        }
+    }
+
+}
+
+header.mobile-active {
+    nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        background: $primary;
+        width: 100%;
+        height: 100%;
+        display: block;
+        padding-top: 2rem;
+        transition: all .3s linear;
+        overflow-x: hidden;
+        overflow-y: scroll;
+
+        li {
+            display: block;
+            border-bottom: 1px solid darken($primary, 8);
+
+            &.has-children {
+                border-bottom: 1px solid darken($primary, 8);
+            }
+
+            a {
+                color: #fff;
+
+                &:hover {
+                    color: lighten($primary, 20);
+                }
+            }
+        
+            .submenu {
+                display: block;
+                position: initial;
+                padding-left: 2rem;
+
+                li {
+                    border-bottom: none;
+
+                    a {
+                        color: #fff;
+                        border-bottom: none;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.fp-news {
+    article {
+        background: $secondary;
+
+        h4 {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            max-height: 56px;
+            overflow: hidden;
+
+            a {
+                color: #111;
+                
+                &:hover {
+                    color: $primary;
+                }
+            }
+        }
+
+        .content {
+            line-height: 1.4;
+            margin-bottom: 1rem;
+            max-height: 95px;
+            overflow: hidden;
+
+            a {
+                color: $primary;
+                font-weight: 600;
+                text-transform: uppercase;
+                font-size: 0.86667rem;
+            }
+        }
+
+        time {
+            color: $primary;
+        }
+    }
+}
+
+.cats {
+    margin-bottom: 1rem;
+
+    .cat {
+        background: $primary;
+        color: #fff;
+        text-transform: uppercase;
+        font-weight: 600;
+        padding: 0.25rem 1rem;
+        font-size: 0.8rem;
+        margin-right: 5px;
+    }
+}
+
+#language-switcher a {
+    color: $primary;
+}
+
+.widget_text .textwidget {
+    background: #111;
+    color: #fff;
+    padding: 1.5rem;
+}
+
+#breadcrumbs {
+    a {
+        color: #ccc;
+    }
+}
+
+#content .newsletter-widget {
+    height: 234px;
+    width: 300px;
+    position: relative;
+
+    input {
+        border: none;
+        position: absolute;
+    }
+    input[type="email"] {
+        top: 125px;
+        right: 0;
+        padding: 0 1rem;
+        height: 40px;
+        background-color: #fff;
+        width: 255px;
+    }
+    input[type="submit"] {
+        background: transparent;
+        top: 186px;
+        right: 60px;
+        text-transform: uppercase;
+        font-weight: bold;
+        cursor: pointer;
+    }
+}
+
+main.category-list {
+
+    header.page-header {
+        margin-bottom: 2rem;
+    }
+
+}
+
+.doc-link {
+    margin-bottom: .5rem;
+
+    span {
+        background: #222;
+        color: #fff;
+        display: inline-block;
+        height: 30px;
+        line-height: 30px;
+        padding: 0 1rem;
+
+        a {
+            color: #fff;
+        }
+    }
+
+    span+span {
+        background: $primary;
+        color: #fff;    
+    }
+
+    &:hover {
+        span {
+            opacity: .8;
+        }
+    }
+}
+
+.social-icon {
+    display: inline-block;
+    width: 27px;
+    height: 27px;
+    text-align: center;
+    margin: 0 1px;
+
+    &:hover {
+        opacity: .85;
+    }
+
+    img,
+    i {
+        display: inline-block;
+        color: #fff;
+        font-size: 21px;
+    }
+}
+
+.grecaptcha-badge {
+    width: 1px !important;
+    height: 1px !important;
+    opacity: 0;
+}
+
+#search-form {
+    position: relative;
+
+    @media (max-width: 767px) {
+        position: absolute;
+        right: 15%;
+    }
+
+    input {
+        display: inline-block;
+        border: 1px solid #ddd;
+        border-radius: 3px;
+        background: #fff;
+        height: 35px;
+        line-height: 35px;
+        padding: 0 1rem;
+        width: 0;
+        opacity: 0;
+        outline: none;
+        transition: all .3s linear;
+    
+        &.active {
+            width: 205px;
+            opacity: 1;
+        }
+
+        &:focus {
+            border: 1px solid $primary;
+        }
+    }
+
+    .img-wr {
+        display: inline-block;
+        position: absolute;
+        right: 8px;
+        top: 5px;
+        cursor: pointer;
+
+        img {
+            height: 21px;
+            display: inline-block;
+        }
+    }
+}
