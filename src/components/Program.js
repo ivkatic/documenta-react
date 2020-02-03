@@ -13,7 +13,7 @@ class Program extends Component {
         this.createMarkup = this.createMarkup.bind();
     }
 
-    componentDidMount() {
+    componentWillMount() {
         this.LoadingBar.continuousStart();
         const api = new WP_API();
         

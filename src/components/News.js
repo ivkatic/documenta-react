@@ -15,7 +15,7 @@ class News extends Component {
         this.loadMore = this.loadMore.bind(this);
     }
 
-    componentDidMount() {
+    componentWillMount() {
         this.getArticles();
     }
 

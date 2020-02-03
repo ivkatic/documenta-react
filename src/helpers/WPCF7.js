@@ -29,7 +29,6 @@ class WPCF7 {
             } )();
     
             $( 'div.wpcf7 > form' ).each( function() {
-                console.log('here');
                 var $form = $( this );
                 wpcf7.initForm( $form );
     

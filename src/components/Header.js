@@ -1,6 +1,6 @@
 import React from 'react';
 import Nav from './Nav';
-import { withRouter } from "react-router-dom";
+import { useHistory, withRouter } from "react-router-dom";
 import { Link } from 'react-router-dom';
 
 class Header extends React.Component {
@@ -15,8 +15,6 @@ class Header extends React.Component {
         }        
         
         this.timer = 0;
-        this.mobileTrigger = this.mobileTrigger.bind(this);
-        this.languageSwitched = this.languageSwitched.bind(this);
     }
 
     onFieldChange = (event) => {
@@ -28,18 +26,18 @@ class Header extends React.Component {
         
         this.timer = setTimeout(() => {
             this.props.handleChange(this.state.searchString);
-        }, 1500);
+            this.props.history.push('/');
+        }, 1000);
 
-        this.props.history.push('/');
     }
 
-    onClick(e) {
+    openSearch = (e) => {
         this.setState(state => ({
             formActive: !state.formActive 
         }));
     }
 
-    mobileTrigger(e) {
+    mobileTrigger = (e) => {
         this.setState(state => ({
             mobileMenuActive: !state.mobileMenuActive,
             mobileMenuClass: !state.mobileMenuActive == true ? 'mobile-active' : ''
@@ -52,19 +50,18 @@ class Header extends React.Component {
         }
     }
 
-    languageSwitched(e, lng) {
+    languageSwitched = (e, lng, link) => {
         e.preventDefault();
         this.setState({
             activeLang: lng
         });
         localStorage.setItem('documenta_locale', lng);
-        window.location.href = e.target.pathname;
+        this.props.history.push(link);
     }
 
     render() {
         let uri = this.props.location.pathname.replace('/en/', '/');
         let uriEn = this.props.location.pathname.replace('/en/', '/');
-        console.log(this.state.activeLang);
 
         uriEn = uriEn.replace('novosti', 'news');
         uriEn = uriEn.replace('kategorija', 'category');
@@ -75,19 +72,19 @@ class Header extends React.Component {
         return (
             <header className={"container mx-auto flex md:block " + this.state.mobileMenuClass }>
                 <div className="logo py-8 pr-8 md:p-8 w-8/12 md:w-full md:px-0 md:py-12">
-                    <Link to={"/"+this.state.activeLang}><img src={env.ASSETS_URL+"/images/Documenta-logo-15.svg"} height="100px" width="auto" /></Link>
+                    <Link to={"/"+ (this.state.activeLang != null && this.state.activeLang != '' ? this.state.activeLang +'/' : '') }><img src={env.ASSETS_URL+"/images/Documenta-logo-15.svg"} height="100px" width="auto" /></Link>
                 </div>
                 <div className="md:flex w-4/12 md:w-full">
                     <Nav locale={this.state.activeLang} />
                     <div className="md:w-3/12 pt-4 md:pt-6 md:ml-16 text-right">
                         <div id="language-switcher" className="text-sm md:text-base block md:inline-block md:px-4 mb-2 md:mb-0">
-                            <Link to={uri} onClick={(e) => this.languageSwitched(e, '')} className="inline-block px-2">HR</Link>
+                            <Link to={uri} onClick={(e) => this.languageSwitched(e, '', uri)} className="inline-block px-2">HR</Link>
                             |
-                            <Link to={"/en"+uriEn} onClick={(e) => this.languageSwitched(e, 'en')} className="inline-block px-2">EN</Link>
+                            <Link to={"/en"+uriEn} onClick={(e) => this.languageSwitched(e, 'en', "/en"+uriEn)} className="inline-block px-2">EN</Link>
                         </div>
                         <div id="search-form" className="inline-block mr-2 md:mr-0">
                             <input type="text" ref={this.searchFormRef} placeholder="Pretražite..." name="search" onChange={this.onFieldChange} onBlur={() => this.setState({formActive: false})} className={ this.state.formActive === true && "active" } />
-                            <div className="img-wr" onClick={this.onClick.bind(this)} >
+                            <div className="img-wr" onClick={ this.openSearch } >
                                 <img src={env.ASSETS_URL+"/images/search-icon.svg"} className="block" />
                             </div>
                         </div>

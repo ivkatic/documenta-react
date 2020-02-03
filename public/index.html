@@ -14,12 +14,27 @@
 
 <body class="">
     <div id="loader">
-        <i class="fa fa-spinner fa-pulse"></i>
+        <svg x="0px" y="0px" viewBox="0 0 79 81" enable-background="new 0 0 79 81" class="loader__image">
+            <defs>
+                <linearGradient id="linear-gradient1" x1="-30%" y1="0" x2="130%" y2="0" >
+                    <stop offset="0" stop-color="#B2A388">
+                        <animate attributeName="offset" values="0;1" dur="3s" repeatCount="indefinite"  /> 
+                    </stop>
+                    <stop offset="0.5" stop-color="#1D1D1B">
+                        <animate attributeName="offset" values="0;1" dur="3s" repeatCount="indefinite"  /> 
+                    </stop>
+                </linearGradient>
+            </defs>
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M25.267,20.823V59.89h9.642c15.383,0,17.632-12.462,17.632-19.984
+                c0-5.052-1.565-19.083-19.419-19.083H25.267z M0.567,59.916V0.284h40.524c26.719,0,36.144,19.756,36.144,39.962
+                c0,24.587-13.021,40.184-40.976,40.184H20.997V59.916H0.567z" class="standard" fill="url(#linear-gradient1)" />
+        </svg>
     </div>
         
     <div id="root"></div>
     <script src="http://localhost:8080/dist/bundle.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i%7CQuicksand:300,400,500,700" rel="stylesheet">
+    <link href="http://documenta.test/wp-content/themes/devexus/style.css" rel="stylesheet" >
     <link href="http://documenta.test/wp-content/themes/devexus/assets/css/font-awsm.css" rel="stylesheet" >
 </body>
 

@@ -1,9 +1,6 @@
 import React, {Component} from 'react';
-import { Router, Route, Switch, Link, NavLink } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import Sidebar from './partials/Sidebar';
-import Breadcrumbs from './partials/Breadcrumbs';
-import PostDate from './partials/PostDate';
-import RelatedPosts from './partials/RelatedPosts';
 import MagnificPopup from '../helpers/MagnificPopup';
 import WPCF7 from '../helpers/WPCF7';
 import PageHeader from './partials/PageHeader';
@@ -15,7 +12,6 @@ class Standard extends Component {
         this.state = {
             //
         }
-        this.createMarkup = this.createMarkup.bind();
     }
 
     componentDidMount() {
@@ -23,13 +19,26 @@ class Standard extends Component {
         WPCF7.code();
     }
 
-    createMarkup(html) {
+    createMarkup = (html) => {
         return {__html: html};
+    }
+
+    handleNavigate = (e) => {
+        if (e.target.tagName === 'A') {
+            const url = e.target.getAttribute('href');
+
+            if(url && url != '') {
+                if(url.includes(env.SITE_URL)) {
+                    e.preventDefault();
+                    let link = url.replace(env.SITE_URL, '');
+                    this.props.history.push(link);
+                }
+            }
+        }
     }
 
     render() {
         const renderWPCF7 = () => {
-            // return WPCF7.code();
             jQuery( 'div.wpcf7 > form' ).each( function() {
                 var $form = jQuery( this );
                 wpcf7.initForm( $form );
@@ -46,17 +55,18 @@ class Standard extends Component {
                 <div className="md:flex">
                     <div className="md:w-9/12 md:pr-6">
                         <PageHeader {...this.props} />
-                        { this.props.thumb != '' && <div className="mb-6"><img src={this.props.thumb} /></div> }
-                        <div 
+                        { this.props.postData && this.props.postData.thumb != '' && <div className="mb-6"><img src={this.props.postData.thumb} /></div> }
+                        { this.props.postData && <div 
                             dangerouslySetInnerHTML = {this.createMarkup(
-                                this.props.content
+                                this.props.postData.content
                             )}
-                        />
-                        { this.props.docs != '' && <PostDocsLinks docs={this.props.docs} /> }
+                            onClick={(e) => this.handleNavigate(e)}
+                        />}
+                        { this.props.postData && this.props.postData.docs != '' && <PostDocsLinks docs={this.props.postData.docs} /> }
                         {/* this.props.type === 'post' && <RelatedPosts postId={ this.props.postId } cats={ this.props.cats } /> */}             
                     </div>
                     <div className="md:w-3/12 md:pl-6">
-                        <Sidebar content={ this.props.sidebar } postId={ this.props.postId } type={ this.props.type } />
+                        <Sidebar content={ this.props.sidebar } postId={ this.props.postData && this.props.postData.postId } type={ this.props.postData && this.props.postData.type } />
                     </div>
                 </div>
                 { renderWPCF7() }
@@ -65,4 +75,4 @@ class Standard extends Component {
     }
 }
 
-export default Standard;
+export default withRouter(Standard);

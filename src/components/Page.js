@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
+import { withRouter } from 'react-router-dom';
 import WP_API from '../data/Api';
 import Standard from '../views/Standard';
 import NoSidebar from '../views/NoSidebar';
-import NotFoundPage from '../components/NotFoundPage';
 import LoadingPage from './LoadingPage';
 
 class Page extends Component {
@@ -13,7 +13,6 @@ class Page extends Component {
             sidebar: '',
             breadcrumbs: '',
         };
-        this.createMarkup = this.createMarkup.bind();
     }
 
     componentWillMount() {
@@ -29,7 +28,6 @@ class Page extends Component {
         }
 
         api.get('post?type=page&slug='+ slug + requestLocale, null, true ).then(result => {
-            // console.log(result);
             if(result && result != '') { 
                 this.setState({
                     postData: result.post,
@@ -45,7 +43,7 @@ class Page extends Component {
         });        
     }
 
-    createMarkup(html) {
+    createMarkup = (html) => {
         return {__html: html};
     }
 
@@ -59,18 +57,18 @@ class Page extends Component {
             }
 
             return (
-                <Template {...this.state.postData} sidebar={this.state.sidebar} breadcrumbs={this.state.breadcrumbs} />
+                <Template {...this.state} />
             );
         } else {
             const previousData = JSON.parse(localStorage.getItem('previousData'));
             return (
                 <div>
                     <LoadingPage />
-                    {previousData && <Standard {...previousData.postData} sidebar={previousData.sidebar} breadcrumbs={previousData.breadcrumbs} /> }
+                    {previousData && <Standard {...previousData} /> }
                 </div>
             );
         }
     }
 }
 
-export default Page;
+export default withRouter(Page);

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Link} from 'react-router-dom';
+import {Link, NavLink} from 'react-router-dom';
 import WP_API from '../data/Api';
 
 class Nav extends Component {
@@ -9,9 +9,10 @@ class Nav extends Component {
             menu: {},
             lang: ''
         };
+        this.getMenu();
     }
 
-    componentDidMount() {
+    getMenu() {
         const locale = this.props.locale;
         let requestLocale = '';
         if(typeof locale !== 'undefined' && locale != '' && locale != null) {
@@ -30,6 +31,12 @@ class Nav extends Component {
                 });
             }
         });
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if(this.props.locale !== prevProps.locale) {
+            this.getMenu();  
+        }
     }
 
     render() {
@@ -66,7 +73,7 @@ class Nav extends Component {
             
                                             return (
                                                 <li className="menu-item sub-item" key={keySubSub}>
-                                                    <Link to={{ pathname: pathnameSubSub, state: { } }}  className="px-6 py-3">{itemSubSub.title}</Link>
+                                                    <NavLink to={{ pathname: pathnameSubSub, state: { } }}  className="px-6 py-3">{itemSubSub.title}</NavLink>
                                                 </li>
                                             )
                                         }) }
@@ -76,9 +83,9 @@ class Nav extends Component {
             
                                 return (
                                     <li className="menu-item sub-item" key={keySub}>
-                                        <Link to={{ pathname: pathnameSub, state: { } }}  className="px-6 py-3">{itemSub.title}  { React.isValidElement(subSubItems) && 
+                                        <NavLink to={{ pathname: pathnameSub, state: { } }}  className="px-6 py-3">{itemSub.title}  { React.isValidElement(subSubItems) && 
                                             <i className="fas fa-caret-right ml-2"></i>
-                                        }</Link>
+                                        }</NavLink>
                                         { React.isValidElement(subSubItems) &&
                                             subSubItems
                                         }
@@ -91,12 +98,12 @@ class Nav extends Component {
 
                     return (
                         <li className={"menu-item inline-block "+ hasChildren} key={key}>
-                            <Link to={{ pathname: pathname, state: { } }}  className="px-8 py-4 block">
+                            <NavLink exact to={{ pathname: pathname, state: { } }}  className="px-8 py-4 block" activeClassName="current-menu-item">
                                 {item.title} 
                                 { React.isValidElement(subItems) && 
                                     <i className="fas fa-caret-down ml-2"></i>
                                 }
-                            </Link>
+                            </NavLink>
                             { React.isValidElement(subItems) &&
                                 subItems
                             }

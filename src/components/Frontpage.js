@@ -4,6 +4,7 @@ import WP_API from '../data/Api';
 import Sidebar from '../views/partials/Sidebar';
 import Article from './Article';
 import LoadingPage from './LoadingPage';
+import Standard from '../views/Standard';
 
 class Frontpage extends Component {
     constructor(props) {
@@ -15,11 +16,10 @@ class Frontpage extends Component {
             searchString: '',
             posts: null,
         };
-        this.getArticles = this.getArticles.bind(this);
-        this.loadMore = this.loadMore.bind(this);
+
     }
 
-    componentDidMount() {        
+    componentWillMount() {        
         if(this.props.searchString == '' ) {
             this.getArticles();
         } else if(this.props.searchString != '' && this.props.searchString !== this.state.searchString) {
@@ -49,11 +49,16 @@ class Frontpage extends Component {
                     sidebar: result.sidebar,
                     searchString: this.props.searchString
                 }));
+                localStorage.setItem('previousData', JSON.stringify({
+                    posts: result.posts,
+                    sidebar: result.sidebar,
+                    breadcrumbs: result.breadcrumbs,
+                }));
             }
         });
     }
 
-    loadMore() {
+    loadMore = () => {
         this.setState(state => ({
             btn_class: 'fa fa-spinner fa-pulse',
             per_page: state.per_page+10
@@ -72,7 +77,7 @@ class Frontpage extends Component {
                                 })
                             }      
                             { this.state.posts.length > 0 &&
-                                <button href="#" onClick={this.loadMore} className="btn btn-arrow mb-8" >
+                                <button href="#" onClick={ this.loadMore } className="btn btn-arrow mb-8" >
                                     <i className={this.state.btn_class}></i> Učitaj više
                                 </button>
                             }
@@ -84,8 +89,12 @@ class Frontpage extends Component {
                 </main>
             );
         } else {
+            const previousData = JSON.parse(localStorage.getItem('previousData'));
             return (
-                <LoadingPage />
+                <div>
+                    <LoadingPage />
+                    {previousData && <Standard {...previousData} /> }
+                </div>
             );
         }
     }

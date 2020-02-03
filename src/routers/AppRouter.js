@@ -28,7 +28,7 @@ const AppRouter = () => {
                     <PublicRoute path="/:locale(hr|en)?/" component={Frontpage} exact={true} />
                     <PublicRoute path="/:locale(hr|en)?/programi/:slug" component={Program} exact={true} />
                     <PublicRoute path="/:locale(hr|en)?/novosti/" component={News} exact={true} />
-                    <PublicRoute path="/:locale(hr|en)?/(novosti|news)/:slug" component={Post} exact={true} />
+                    <PublicRoute path="/:locale(hr|en)?/(novosti|news)/:slug" component={Post} exact={true} history={history} />
                     <PublicRoute path="/:locale(hr|en)?/(kategorija|category)/:slug" component={Category} exact={true} />
                     <PublicRoute path="/:locale(hr|en)?/:slug" component={Page} />
                     <PublicRoute component={NotFoundPage} />

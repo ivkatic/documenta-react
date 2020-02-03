@@ -6,10 +6,10 @@ const PageHeader = (props) => {
     return (
         <header className="page-header bg-primary p-6 pt-2 pb-10">
             {props.breadcrumbs != '' && <Breadcrumbs { ...props } />}
-            <h1 className="text-gray-900 md:pl-12 mt-8 mb-2">{ props.title }</h1>
-            { props.type === 'post' &&
+            <h1 className="text-gray-900 md:pl-12 mt-8 mb-2">{ (props.postData && props.postData.title) }</h1>
+            { props.postData && props.postData.type === 'post' &&
                 <div className="md:pl-12 text-gray-300">
-                    <PostDate date={props.date} />
+                    <PostDate date={props.postData.date} />
                 </div>
             }
         </header>

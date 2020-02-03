@@ -4,7 +4,8 @@ import WP_API from '../data/Api';
 import Sidebar from '../views/partials/Sidebar';
 import Article from '../components/Article';
 import PageHeader from '../views/partials/PageHeader';
-import LoadingBar from 'react-top-loading-bar';
+import LoadingPage from './LoadingPage';
+import Standard from '../views/Standard';
 
 class Category extends Component {
     constructor(props) {
@@ -15,16 +16,13 @@ class Category extends Component {
             posts: null,
             sidebar: '',
             breadcrumbs: '',
-            loadingBarProgress: 0
         };
-        this.getArticles = this.getArticles.bind(this);
-        this.loadMore = this.loadMore.bind(this);
 
         const pathname = this.props.location.pathname.split('/');
         this.slug = pathname.pop() || pathname.pop(); 
     }
 
-    componentDidMount() {
+    componentWillMount() {
         this.getArticles();
     }
 
@@ -35,8 +33,6 @@ class Category extends Component {
     }
 
     getArticles() {
-        this.LoadingBar.continuousStart();
-
         const locale = this.props.match.params.locale;
         let requestLocale = '';
         if(typeof locale !== 'undefined' && locale != '' && locale != null) {
@@ -52,12 +48,16 @@ class Category extends Component {
                     sidebar: result.sidebar,
                     breadcrumbs: result.breadcrumbs
                 }));
+                localStorage.setItem('previousData', JSON.stringify({
+                    posts: result.posts,
+                    sidebar: result.sidebar,
+                    breadcrumbs: result.breadcrumbs,
+                }));
             }
         });
-        this.LoadingBar.complete();
     }
 
-    loadMore() {
+    loadMore = () => {
         this.setState(state => ({
             btn_class: 'fa fa-spinner fa-pulse',
             per_page: state.per_page+10
@@ -70,14 +70,14 @@ class Category extends Component {
                 <main id="content" className="category-list container mx-auto mt-12 mb-24">
                     <div className="md:flex fp-news">
                         <div className="md:w-9/12 md:pr-6">
-                            <PageHeader title={this.state.posts.length > 0 ? this.state.posts[0].cats[0].name : this.slug} breadcrumbs={this.state.breadcrumbs} />
+                            <PageHeader postData={{title: (this.state.posts.length > 0 ? this.state.posts[0].cats[0].name : this.slug)}} breadcrumbs={this.state.breadcrumbs} />
                             { this.state.posts.length > 0 &&
                                 this.state.posts.map((item, i) => {
                                     return <Article item={item} key={i} />
                                 })
                             }      
                             { this.state.posts.length > 0 &&
-                                <button href="#" onClick={this.loadMore} className="btn btn-arrow mb-8" >
+                                <button href="#" onClick={ this.loadMore } className="btn btn-arrow mb-8" >
                                     <i className={this.state.btn_class}></i> Učitaj više
                                 </button>
                             }
@@ -89,14 +89,13 @@ class Category extends Component {
                 </main>
             );
         } else {
+            const previousData = JSON.parse(localStorage.getItem('previousData'));
             return (
-                <LoadingBar
-                    height={3}
-                    color='#B2A388'
-                    onRef={ref => (this.LoadingBar = ref)}
-                />
+                <div>
+                    <LoadingPage />
+                    {previousData && <Standard {...previousData} /> }
+                </div>
             );
-
         }
     }
 }

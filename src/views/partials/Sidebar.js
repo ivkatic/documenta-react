@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import WP_API from '../../data/Api';
+import { useHistory, withRouter } from "react-router-dom";
 
 class Sidebar extends Component {
     constructor(props) {
@@ -7,10 +8,9 @@ class Sidebar extends Component {
         this.state = {
             sidebar: ''
         };
-        this.createMarkup = this.createMarkup.bind();
     }
 
-    componentDidMount() {
+    componentWillMount() {
         if(this.props.content != '') {
             this.setState({
                 sidebar: this.props.content
@@ -18,7 +18,6 @@ class Sidebar extends Component {
         } else {
             const api = new WP_API();
             api.get(`sidebar?type=${this.props.type}&id=${this.props.postId}` ).then(result => {
-                // console.log(result);
                 if(result && result != '') { 
                     this.setState({
                         sidebar: result
@@ -28,8 +27,22 @@ class Sidebar extends Component {
         }
     }
 
-    createMarkup(html) {
+    createMarkup = (html) => {
         return {__html: html};
+    }
+
+    handleNavigate = (e) => {
+        if (e.target.tagName === 'A') {
+            const url = e.target.getAttribute('href');
+
+            if(url && url != '') {
+                if(url.includes(env.SITE_URL)) {
+                    e.preventDefault();
+                    let link = url.replace(env.SITE_URL, '');
+                    this.props.history.push(link);
+                }
+            }
+        }
     }
 
     render() {
@@ -40,6 +53,7 @@ class Sidebar extends Component {
                         dangerouslySetInnerHTML = {this.createMarkup(
                             this.state.sidebar
                         )}
+                        onClick={(e) => this.handleNavigate(e)}
                     />                     
                 </aside>
             );
@@ -49,4 +63,4 @@ class Sidebar extends Component {
     }
 }
 
-export default Sidebar;
+export default withRouter(Sidebar);

@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import WP_API from '../../data/Api';
+import {withRouter} from 'react-router-dom';
 
 class Breadcrumbs extends Component {
     constructor(props) {
@@ -7,7 +8,6 @@ class Breadcrumbs extends Component {
         this.state = {
             breadcrumbs: ''
         };
-        this.createMarkup = this.createMarkup.bind();
     }
 
     componentDidMount() {
@@ -19,7 +19,6 @@ class Breadcrumbs extends Component {
             const api = new WP_API();
             api.url = env.SITE_URL +'/wp-json/dx/';
             api.get('breadcrumbs?id='+this.props.postId, null, true ).then(result => {
-                // console.log(result);
                 if(result && result != '') { 
                     this.setState({
                         breadcrumbs: result
@@ -29,8 +28,22 @@ class Breadcrumbs extends Component {
         }
     }
 
-    createMarkup(html) {
+    createMarkup = (html) => {
         return {__html: html};
+    }
+
+    handleNavigate = (e) => {
+        if (e.target.tagName === 'A') {
+            const url = e.target.getAttribute('href');
+
+            if(url && url != '') {
+                if(url.includes(env.SITE_URL)) {
+                    e.preventDefault();
+                    let link = url.replace(env.SITE_URL, '');
+                    this.props.history.push(link);
+                }
+            }
+        }
     }
 
     render() {
@@ -41,6 +54,7 @@ class Breadcrumbs extends Component {
                         dangerouslySetInnerHTML = {this.createMarkup(
                             this.state.breadcrumbs
                         )}
+                        onClick={(e) => this.handleNavigate(e)}
                     />     
                 </div>
             );
@@ -50,4 +64,4 @@ class Breadcrumbs extends Component {
     }
 }
 
-export default Breadcrumbs;
+export default withRouter(Breadcrumbs);

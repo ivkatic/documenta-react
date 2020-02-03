@@ -10,7 +10,6 @@ class RelatedPosts extends Component {
             per_page: 2,
             posts: {}
         };
-        this.getRelated = this.getRelated.bind(this);
     }
 
     componentDidMount() {

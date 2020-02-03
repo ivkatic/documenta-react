@@ -194,6 +194,10 @@ nav {
 
             a {
                 color: #111;
+
+                &.current-menu-item {
+                    color: $primary;
+                }
             }
 
             .submenu {
@@ -203,6 +207,7 @@ nav {
                 padding-top: 2px;
                 width: 300px;
                 background: transparent;
+                box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
 
                 li {
                     a {
@@ -325,6 +330,7 @@ header.mobile-active {
                 display: block;
                 position: initial;
                 padding-left: 2rem;
+                box-shadow: none;
 
                 li {
                     border-bottom: none;
