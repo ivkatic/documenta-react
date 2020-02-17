@@ -415,6 +415,21 @@ header.mobile-active {
     }
 }
 
+#content .inner-content {
+    ul, ol {
+        padding-left: 2rem;
+        margin: 0.5rem 0;
+        
+        li {
+            list-style-type: initial;
+        }
+    }
+
+    ol li {
+        list-style-type: decimal;
+    }
+}
+
 #content .newsletter-widget {
     height: 234px;
     width: 300px;

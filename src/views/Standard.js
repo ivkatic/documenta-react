@@ -56,7 +56,7 @@ class Standard extends Component {
                     <div className="md:w-9/12 md:pr-6">
                         <PageHeader {...this.props} />
                         { this.props.postData && this.props.postData.thumb != '' && <div className="mb-6"><img src={this.props.postData.thumb} /></div> }
-                        { this.props.postData && <div 
+                        { this.props.postData && <div className="inner-content" 
                             dangerouslySetInnerHTML = {this.createMarkup(
                                 this.props.postData.content
                             )}

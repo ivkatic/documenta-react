@@ -21,7 +21,7 @@ const Footer = () => (
                     <a href="#" className="social-icon"><img src={env.ASSETS_URL+"/images/icon_FB.svg"} /></a>
                     <a href="#" className="social-icon"><img src={env.ASSETS_URL+"/images/icon_Twitter.svg"} /></a>
                     <a href="#" className="social-icon"><img src={env.ASSETS_URL+"/images/icon_YT.svg"} /></a>
-                    <a href="#" className="social-icon bg-primary"><i className="fa fa-instagram align-middle"></i></a>
+                    <a href="#" className="social-icon bg-primary"><i className="fab fa-instagram align-middle"></i></a>
                 </div>
             </div>
         </div>

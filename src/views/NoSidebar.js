@@ -43,7 +43,7 @@ class NoSidebar extends Component {
                     <div className="w-full">
                         <PageHeader {...this.props} />
                         { this.props.postData && this.props.postData.thumb != '' && <div className="mb-6"><img src={this.props.postData.thumb} /></div> }
-                        { this.props.postData && <div 
+                        { this.props.postData && <div className="inner-content"
                             dangerouslySetInnerHTML = {this.createMarkup(
                                 this.props.postData.content
                             )}
