@@ -1,5 +1,11 @@
 import React from 'react';
 
+var htmlDecode = (input) => {
+  var doc = new DOMParser().parseFromString(input, "text/html");
+  return doc.documentElement.textContent;
+}
+
+
 const PostDocsLinks = (props) => {
     if(typeof props.docs === 'undefined') {
         return null;
@@ -19,7 +25,7 @@ const PostDocsLinks = (props) => {
                     <div key={i} className="doc-link mt-4">
                         <a href={item.url} target="_blank">
                             <span><i className="fa fa-file-pdf-o"></i> { icon }</span>
-                            <span>{ item.name }</span>
+                            <span>{ htmlDecode(item.title) }</span>
                         </a>
                     </div>
                 )

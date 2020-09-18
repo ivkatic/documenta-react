@@ -54,25 +54,25 @@ class Nav extends Component {
                         pathname = `/novosti${pathname}`;
                     }
                     
-                    if(Object.keys(item.children).length !== 0 && item.children.constructor === Object != 0) {
+                    if(item.children.constructor === Array != 0 && item.children.length !== 0) {
                         hasChildren = 'has-children';
 
                         subItems = (
                             <ul className="submenu" key={ key + 'sub' } >
-                            { Object.keys(item.children).map((keySub, i) => {
-                                let itemSub = item.children[keySub];
+                            { item.children.map((itemSub, subI) => {
+                                // let itemSub = item.children[i];
                                 let pathnameSub = itemSub.url.replace(env.SITE_URL, '');
                                 let subSubItems = [];
 
-                                if(Object.keys(itemSub.children).length !== 0 && itemSub.children.constructor === Object != 0) {
+                                if(itemSub.children.constructor === Array != 0 && itemSub.children.length !== 0) {
                                     subSubItems = (
                                         <ul className="submenu" key={ key + 'subsub' } >
-                                        { Object.keys(itemSub.children).map((keySubSub, i) => {
-                                            let itemSubSub = itemSub.children[keySubSub];
+                                        { itemSub.children.map((itemSubSub, subSubI) => {
+                                            // let itemSubSub = itemSub.children[keySubSub];
                                             let pathnameSubSub = itemSubSub.url.replace(env.SITE_URL, '');
             
                                             return (
-                                                <li className="menu-item sub-item" key={keySubSub}>
+                                                <li className="menu-item sub-item" key={subSubI}>
                                                     <NavLink to={{ pathname: pathnameSubSub, state: { } }}  className="px-6 py-3">{itemSubSub.title}</NavLink>
                                                 </li>
                                             )
@@ -82,7 +82,7 @@ class Nav extends Component {
                                 } 
             
                                 return (
-                                    <li className="menu-item sub-item" key={keySub}>
+                                    <li className="menu-item sub-item" key={subI}>
                                         <NavLink to={{ pathname: pathnameSub, state: { } }}  className="px-6 py-3">{itemSub.title}  { React.isValidElement(subSubItems) && 
                                             <i className="fas fa-caret-right ml-2"></i>
                                         }</NavLink>

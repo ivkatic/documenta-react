@@ -28,7 +28,7 @@ class Standard extends Component {
             const url = e.target.getAttribute('href');
 
             if(url && url != '') {
-                if(url.includes(env.SITE_URL)) {
+                if(url.includes(env.SITE_URL) && !url.includes('.pdf') && !url.includes('.doc')) {
                     e.preventDefault();
                     let link = url.replace(env.SITE_URL, '');
                     this.props.history.push(link);
