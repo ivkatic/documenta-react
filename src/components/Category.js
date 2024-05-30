@@ -22,7 +22,7 @@ class Category extends Component {
         this.slug = pathname.pop() || pathname.pop(); 
     }
 
-    componentWillMount() {
+    componentDidMount() {
         this.getArticles();
     }
 
