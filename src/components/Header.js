@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Nav from './Nav';
 import { useHistory, withRouter } from "react-router-dom";
 import { Link } from 'react-router-dom';
@@ -7,7 +7,6 @@ class Header extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            searchString: '',
             formActive: false,
             mobileMenuActive: false,
             mobileMenuClass: '',
@@ -17,18 +16,19 @@ class Header extends React.Component {
         this.timer = 0;
     }
 
+    // useState hook for searchString
+    const [searchString, setSearchString] = useState('');
+
     onFieldChange = (event) => {
-        // for a regular input field, read field name and value from the event
-        this.setState({searchString: event.target.value});     
+        setSearchString(event.target.value);
         if(this.timer) {
             clearTimeout(this.timer);
         }
         
         this.timer = setTimeout(() => {
-            this.props.handleChange(this.state.searchString);
+            this.props.handleChange(searchString);
             this.props.history.push('/');
         }, 1000);
-
     }
 
     openSearch = (e) => {
@@ -83,7 +83,7 @@ class Header extends React.Component {
                             <Link to={"/en"+uriEn} onClick={(e) => this.languageSwitched(e, 'en', "/en"+uriEn)} className="inline-block px-2">EN</Link>
                         </div>
                         <div id="search-form" className="inline-block mr-2 md:mr-0">
-                            <input type="text" ref={this.searchFormRef} placeholder="Pretražite..." name="search" onChange={this.onFieldChange} onBlur={() => this.setState({formActive: false})} className={ this.state.formActive === true && "active" } />
+                            <input type="text" placeholder="Pretražite..." name="search" onChange={this.onFieldChange} onBlur={() => this.setState({formActive: false})} className={ this.state.formActive === true && "active" } />
                             <div className="img-wr" onClick={ this.openSearch } >
                                 <img src={env.ASSETS_URL+"/images/search-icon.svg"} className="block" />
                             </div>
