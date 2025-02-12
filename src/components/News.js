@@ -13,6 +13,12 @@ class News extends Component {
         };
         this.getArticles = this.getArticles.bind(this);
         this.loadMore = this.loadMore.bind(this);
+        this.handleNewButton = this.handleNewButton.bind(this);
+    }
+
+    handleNewButton() {
+        // Placeholder for new button functionality
+        console.log('New button clicked');
     }
 
     componentWillMount() {
@@ -54,6 +60,7 @@ class News extends Component {
                             })
                         }      
                         <button href="#" onClick={this.loadMore} className="btn" >Učitaj više</button>
+                        <button href="#" onClick={this.handleNewButton} className="btn ml-4" >New Button</button>
                     </div>
                     <div className="md:w-3/12 md:pl-6">
                         <Sidebar postId="" type="archive_posts" />
