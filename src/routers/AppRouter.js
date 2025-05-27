@@ -11,6 +11,7 @@ import Post from '../components/Post';
 import News from '../components/News';
 import Program from '../components/Program';
 import Category from '../components/Category';
+import Blog from '../components/Blog';
 import ScrollToTop from './ScrollToTop';
 
 export const history = createHistory();
@@ -30,6 +31,8 @@ const AppRouter = () => {
                     <PublicRoute path="/:locale(hr|en)?/novosti/" component={News} exact={true} />
                     <PublicRoute path="/:locale(hr|en)?/(novosti|news)/:slug" component={Post} exact={true} history={history} />
                     <PublicRoute path="/:locale(hr|en)?/(kategorija|category)/:slug" component={Category} exact={true} />
+                    <PublicRoute path="/:locale(hr|en)?/blog" component={Blog} exact={true} />
+                    <PublicRoute path="/blog" component={Blog} exact={true} />
                     <PublicRoute path="/:locale(hr|en)?/:slug" component={Page} />
                     <PublicRoute component={NotFoundPage} />
                 </Switch>
